@@ -1,0 +1,55 @@
+body {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    margin: 0;
+    background-color: #1E1F29;
+    font-family: Arial, sans-serif;
+}
+.booking-container {
+    background-color: #3A2E66;
+    padding: 30px;
+    border-radius: 20px;
+    width: 400px;
+    text-align: center;
+}
+.booking-container h1 {
+    font-size: 24px;
+    color: #FFFFFF;
+    font-weight: bold;
+    margin-bottom: 20px;
+}
+.booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+.input-field {
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    background-color: #1E1F29;
+    color: #FFFFFF;
+    font-size: 16px;
+}
+.date-time {
+    display: flex;
+    gap: 10px;
+}
+.date-time .input-field {
+    flex: 1;
+}
+.submit-button {
+    background-color: #D32F2F;
+    color: #FFFFFF;
+    padding: 10px;
+    border: none;
+    border-radius: 8px;
+    font-size: 16px;
+    cursor: pointer;
+    font-weight: bold;
+}
+.submit-button:hover {
+    background-color: #B71C1C;
+}

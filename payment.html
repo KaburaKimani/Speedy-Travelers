@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Payment Page</title>
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+    <link rel="stylesheet" href="payment.css">
+</head>
+<body>
+    <h1>Payment Page</h1>
+    <div class="signup-container">
+        <h1>Make Payment</h1>
+        <!-- PesaPal Payment Form -->
+        <form id="payment-form" action="process_payment.php" method="post">
+            <label for="amount">Amount (KES)</label>
+            <input type="number" name="amount" id="amount" required />
+
+            <label for="first-name">First Name</label>
+            <input type="text" name="first_name" id="first-name" required />
+
+            <label for="last-name">Last Name</label>
+            <input type="text" name="last_name" id="last-name" required />
+
+            <label for="email">Email</label>
+            <input type="email" name="email" id="email" required />
+
+            <label for="phone">Phone Number</label>
+            <input type="text" name="phone" id="phone" required />
+
+            <button type="submit">Pay Now</button>
+        </form>
+    </div>
+</body>
+</html>
+

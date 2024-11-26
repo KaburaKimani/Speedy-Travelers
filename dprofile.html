@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Driver Profile | Speedy Travelers</title>
+  <link rel="icon" type="image/x-icon" href="favicon.png">
+  <link rel="stylesheet" href="dprofile.css">
+</head>
+<body>
+  <header class="home-header">
+    <div class="logo-container">
+      <img src="logo-color.png" alt="Company Logo" class="logo">
+    </div>
+    <nav class="nav-bar">
+      <a href="driver.html" class="booking-button">Dashboard</a>
+      <a href="#" class="booking-button">Logout</a>
+    </nav>
+  </header>
+
+  <main class="home-main">
+    <!-- Profile Section -->
+    <section class="profile-section map-section">
+      <h2>Driver Profile</h2>
+      <div class="profile-info">
+        <img src="driver.jpg" alt="Driver Picture" class="profile-picture">
+        <div class="profile-details">
+          <p><strong>Name:</strong> John Doe</p>
+          <p><strong>Email:</strong> johndoe@example.com</p>
+          <p><strong>Vehicle:</strong> Toyota Prius - KDC 123A</p>
+        </div>
+      </div>
+      <button id="edit-profile-button" class="tracking-button">Edit Profile</button>
+    </section>
+
+    <!-- Trip History Section -->
+    <section class="trip-history-section map-section">
+      <h2>Trip History</h2>
+      <div id="trip-history-list">
+        <p>No trips available.</p>
+      </div>
+    </section>
+  </main>
+<script type="text/javascript">
+  // Modal functionality
+const modal = document.getElementById("edit-profile-modal");
+const editProfileButton = document.getElementById("edit-profile-button");
+const closeButton = document.querySelector(".close-button");
+
+// Open modal
+editProfileButton.addEventListener("click", () => {
+  modal.style.display = "block";
+});
+
+// Close modal
+closeButton.addEventListener("click", () => {
+  modal.style.display = "none";
+});
+
+// Save profile changes
+document.getElementById("edit-profile-form").addEventListener("submit", (event) => {
+  event.preventDefault();
+
+  // Get updated values
+  const name = document.getElementById("name").value;
+  const email = document.getElementById("email").value;
+  const phone = document.getElementById("phone").value;
+  const vehicle = document.getElementById("vehicle").value;
+
+  alert("Profile updated successfully!");
+
+  // Update profile details in UI
+  document.querySelector(".profile-details").innerHTML = `
+    <p><strong>Name:</strong> ${name}</p>
+    <p><strong>Email:</strong> ${email}</p>
+    <p><strong>Phone:</strong> ${phone}</p>
+    <p><strong>Vehicle:</strong> ${vehicle}</p>
+  `;
+
+  modal.style.display = "none";
+});
+
+// Trip history (placeholder)
+const tripHistory = [
+  { date: "2024-11-01", pickup: "Main Street", destination: "Airport" },
+  { date: "2024-11-02", pickup: "Park Avenue", destination: "Mall" },
+];
+
+function updateTripHistory() {
+  const historyList = document.getElementById("trip-history-list");
+  historyList.innerHTML = ""; // Clear old content
+
+  if (tripHistory.length === 0) {
+    historyList.innerHTML = "<p>No trips available.</p>";
+    return;
+  }
+
+  tripHistory.forEach((trip) => {
+    const tripItem = document.createElement("div");
+    tripItem.textContent = `${trip.date} - ${trip.pickup} to ${trip.destination}`;
+    historyList.appendChild(tripItem);
+  });
+}
+
+document.addEventListener("DOMContentLoaded", updateTripHistory);
+
+</script>
+  <footer class="home-footer">
+    <p>&copy; 2024 Company Name. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Edit Profile Modal -->
+  <div id="edit-profile-modal" class="modal">
+    <div class="modal-content">
+      <span class="close-button">&times;</span>
+      <h2>Edit Profile</h2>
+      <form id="edit-profile-form">
+        <label for="name">Name:</label>
+        <input type="text" id="name" value="John Doe">
+        <label for="email">Email:</label>
+        <input type="email" id="email" value="johndoe@example.com">
+        <label for="phone">Phone:</label>
+        <input type="text" id="phone" value="+123 456 7890">
+        <label for="vehicle">Vehicle:</label>
+        <input type="text" id="vehicle" value="Toyota Prius - KDC 123A">
+        <button type="submit" class="tracking-button">Save Changes</button>
+      </form>
+    </div>
+  </div>
+</body>
+</html>

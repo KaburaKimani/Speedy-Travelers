@@ -1,0 +1,158 @@
+/* General Styles */
+body {
+    font-family: 'Montserrat', sans-serif;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #2F2D46;
+    color: #333;
+}
+
+/* Header Section */
+.home-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    background-color: #3A2E66;
+    padding: 10px 20px;
+}
+.home{
+    margin-left: 10px;
+}
+.contactus{
+    margin-left: 60px;
+}
+.User{
+   margin-right: 20px;
+}
+.logo {
+    display: flex;
+    align-items: center;
+    transform-origin:left ;
+    height: 100%;
+    trnasform
+    height: auto;
+    width: 100px;
+    border-top-right-radius: 20px;
+}
+
+.nav-bar a {
+    font-family: 'Montserrat', sans-serif;
+    text-decoration: none;
+    padding: 20px;
+    color: white;
+    font-weight: bold;
+    font-size: 18px;
+}
+
+.nav-bar a:hover {
+    transition: box-shadow 0.3s ease;
+    box-shadow: 0px 5px 20px #B71C1C;
+}
+
+/* Hero Section (Booking Form) */
+.hero-section {
+    background-image: url('DALL·E 2024-10-23 20.31.17 - A wireframe design for a public transport website with a Kenyan ghetto theme, featuring graffiti elements but without any background imagery. The desi.jpg'); /* Replace with actual image */
+    background-size: cover;
+    background-position: center;
+    width: 100%;
+    height: 650px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.hero-content {
+    background-color: rgba(0, 0, 0, 0.5);
+    padding: 30px;
+    text-align: center;
+    border-radius: 10px;
+    color: white;
+}
+
+h1 {
+    font-size: 36px;
+    font-weight: bold;
+    margin-bottom: 15px;
+}
+
+p {
+    font-size: 18px;
+    margin-bottom: 30px;
+}
+
+/* Booking Form */
+.booking-form {
+    display: flex;
+    flex-direction: column;
+    gap: 15px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+label {
+    font-size: 16px;
+    margin-bottom: 5px;
+}
+
+select, input[type="date"] {
+    width: 250px;
+    padding: 10px;
+    font-size: 14px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+}
+
+.booking-button {
+    background-color: #F53333;
+    color: white;
+    padding: 12px 30px;
+    border: none;
+    border-radius: 30px;
+    cursor: pointer;
+    font-size: 18px;
+    font-weight: bold;
+    transition: background-color 0.3s ease;
+}
+
+.booking-button:hover {
+    background-color: #5B4872;
+}
+
+/* Available Buses Section */
+.bus-section {
+    text-align: center;
+    padding: 20px;
+    background-color: #fff;
+    margin-top: 30px;
+    border-radius: 10px;
+}
+
+.bus-section ul {
+    list-style: none;
+    padding: 0;
+}
+
+.bus-section li {
+    font-size: 18px;
+    margin: 10px 0;
+}
+
+/* Footer */
+.home-footer {
+    color: white;
+    display: flex;
+    justify-content: space-around;
+    width: 100%;
+    padding: 2px;
+    background-color: #3A2E66;
+    position: fixed;
+    bottom: 0;
+}

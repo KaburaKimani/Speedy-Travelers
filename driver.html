@@ -1,0 +1,178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Driver | Speedy Travelers</title>
+  <link rel="icon" type="image/x-icon" href="favicon.png">
+  <link rel="stylesheet" href="driver.css">
+
+</head>
+<body>
+  <header class="home-header">
+    <div class="logo-container">
+      <img src="logo-color.png" alt="Company Logo" class="logo">
+    </div>
+    <nav class="nav-bar" id="pagenav">
+      <a href="passenger.html">Home</a>
+      <a href="dprofile.html"><i class="fa-regular fa-user"></i>Profile</a>
+    </nav>
+  </header>
+
+  <main class="home-main">
+    <section id="dashboard" class="map-section">
+      <h2>Welcome, Driver!</h2>
+      <p>Manage your rides and track your progress.</p>
+      <div class="tracking-info">
+        <button id="start-ride-button" class="tracking-button">Start New Ride</button>
+        <button id="view-active-ride-button" class="tracking-button">View Active Ride</button>
+      </div>
+    </section>
+    <section id="ride-requests" class="map-section">
+      <h2>Ride Requests</h2>
+      <div id="ride-requests-list">
+        <p>No ride requests available.</p>
+      </div>
+      <div>
+        <button id="accept-request-button" class="button1">Accept Request</button>
+        <button id="reject-request-button" class="button2">Reject Request</button>
+      </div>
+    </section>
+    <section id="earnings" class="map-section">
+      <h2>Earnings</h2>
+      <p>Total Earnings: <strong>Ksh 0.00</strong></p>
+      <button id="view-earnings-button" class="button3">View Detailed Report</button>
+    </section>
+  </main>
+
+  <footer class="home-footer">
+    <p>&copy; 2024 Speedy Travelers. All Rights Reserved.</p>
+  </footer>
+
+  <!-- Custom Alert Modal -->
+  <div id="custom-alert" class="alert-overlay">
+    <div class="alert-box">
+      <p id="alert-message">This is a custom alert!</p>
+      <button id="alert-ok-button" class="alert-button">OK</button>
+    </div>
+  </div>
+
+  <script type="text/javascript">
+    // Sample ride request data
+    const rideRequests = [
+      { id: 1, passenger: "John Doe", pickup: "Main Street", destination: "Airport" },
+      { id: 2, passenger: "Jane Smith", pickup: "Park Avenue", destination: "Mall" },
+    ];
+
+    let activeRide = null;
+
+    // Show custom alert
+    function showCustomAlert(message) {
+      const alertOverlay = document.getElementById("custom-alert");
+      const alertMessage = document.getElementById("alert-message");
+      const alertOkButton = document.getElementById("alert-ok-button");
+
+      alertMessage.textContent = message;
+      alertOverlay.style.display = "flex";
+
+      alertOkButton.onclick = () => {
+        alertOverlay.style.display = "none";
+      };
+    }
+
+    // Start a new ride
+    function startNewRide() {
+      if (rideRequests.length > 0) {
+        activeRide = rideRequests.shift();
+        showCustomAlert(`New ride started with passenger: ${activeRide.passenger}`);
+        updateRideRequestsUI();
+      } else {
+        showCustomAlert("No ride requests available.");
+      }
+    }
+
+    // View active ride details
+    function viewActiveRide() {
+      if (activeRide) {
+        showCustomAlert(
+          `Active Ride Details:
+          Passenger: ${activeRide.passenger}
+          Pickup: ${activeRide.pickup}
+          Destination: ${activeRide.destination}`
+        );
+      } else {
+        showCustomAlert("No active ride at the moment.");
+      }
+    }
+
+    // Accept a ride request
+    function acceptRideRequest() {
+      if (rideRequests.length > 0) {
+        const request = rideRequests[0];
+        showCustomAlert(`Ride request accepted for ${request.passenger}`);
+        startNewRide();
+      } else {
+        showCustomAlert("No ride requests to accept.");
+      }
+    }
+
+    // Reject a ride request
+    function rejectRideRequest() {
+      if (rideRequests.length > 0) {
+        const rejectedRequest = rideRequests.shift();
+        showCustomAlert(`Ride request rejected for ${rejectedRequest.passenger}`);
+        updateRideRequestsUI();
+      } else {
+        showCustomAlert("No ride requests to reject.");
+      }
+    }
+
+    // Update ride request UI
+    function updateRideRequestsUI() {
+      const rideRequestSection = document.getElementById("ride-requests-list");
+      rideRequestSection.innerHTML = "";
+
+      if (rideRequests.length === 0) {
+        rideRequestSection.innerHTML = "<p>No ride requests available.</p>";
+        return;
+      }
+
+      rideRequests.forEach((request) => {
+        const requestDiv = document.createElement("div");
+        requestDiv.textContent = `Passenger: ${request.passenger}, Pickup: ${request.pickup}, Destination: ${request.destination}`;
+        rideRequestSection.appendChild(requestDiv);
+      });
+    }
+
+    // Show earnings details
+    function showEarningsDetails() {
+      showCustomAlert("Earnings details are not implemented yet.");
+    }
+
+    // Attach event listeners
+    document.addEventListener("DOMContentLoaded", () => {
+      document
+        .getElementById("start-ride-button")
+        .addEventListener("click", startNewRide);
+
+      document
+        .getElementById("view-active-ride-button")
+        .addEventListener("click", viewActiveRide);
+
+      document
+        .getElementById("accept-request-button")
+        .addEventListener("click", acceptRideRequest);
+
+      document
+        .getElementById("reject-request-button")
+        .addEventListener("click", rejectRideRequest);
+
+      document
+        .getElementById("view-earnings-button")
+        .addEventListener("click", showEarningsDetails);
+
+      updateRideRequestsUI();
+    });
+  </script>
+</body>
+</html>

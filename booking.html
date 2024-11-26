@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Your Journey</title>
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+    <link rel="stylesheet" href="booking.css">
+</head>
+<body>
+    <nav>
+        <a href="contactus.html" target="_blank"><i class="fa-solid fa-phone"></i> Home</a>
+        <a href="contactus.html" target="_blank"><i class="fa-solid fa-phone"></i> Contact Us</a>
+    </nav>
+    <div class="booking-container">
+        <h1>Book Your Journey</h1>
+        <form class="booking-form" action="booking.php" method="POST">
+            <input type="text" name="from" placeholder="From" class="input-field">
+            <input type="text" name="to" placeholder="To" class="input-field">
+            <div class="date-time">
+                <input type="date" name="date" class="input-field">
+                <input type="time" name="time" class="input-field">
+            </div>
+            <button type="submit" class="submit-button">Show available routes</button>
+        </form>
+    </div>
+</body>
+</html>

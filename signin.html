@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign In | Speedy Travelers</title>
+    <link rel="icon" type="image/x-icon" href="favicon.png">
+    <link rel="stylesheet" href="signin.css">
+</head>
+<body>
+        <div class="login-form">
+            <img src="logo-color.png" alt="Speedy Travelers Logo" class="logo">
+            <h1>SIGN IN</h1>
+        <form action="passenger.html" method="GET">
+            <label for="email">Email:</label>
+            <input type="email" id="email" placeholder="Enter Email" required>
+            <span class="error" id="emailError"></span>
+            <label for="password">Password:</label>
+            <input type="password" id="password" placeholder="Enter Password" required>
+            <span class="error" id="passwordError"></span>
+            <div class="toggle-password">
+               <input type="checkbox" id="toggle">
+               <label for="toggle">Show Password</label>
+            </div>
+            <button onclick="validateForm();redirectToPage();" type="submit">Login</button>
+        <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+        </form>
+    </div>
+    <script type="text/javascript">
+const togglePassword = document.getElementById('toggle');
+const passwordField = document.getElementById('password');
+togglePassword.addEventListener('change', function () {
+    if (togglePassword.checked) {
+        passwordField.type = 'text';
+    } else {
+        passwordField.type = 'password';  // Hide password
+    }
+});
+</script>
+<script type="text/javascript">
+document.getElementById('login-form').addEventListener('submit', function (event) {
+    event.preventDefault();
+    const emailInput = document.getElementById('email');
+    const passwordInput = document.getElementById('password');
+    const emailError = document.getElementById('emailError');
+    const passwordError = document.getElementById('passwordError');
+
+    let isValid = true;
+    emailError.textContent = '';
+    passwordError.textContent = '';
+    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
+    if (!emailPattern.test(emailInput.value)) {
+        emailError.textContent = 'Please enter a valid email address.';
+        isValid = false;
+    }
+    if (passwordInput.value.trim() === '') {
+        passwordError.textContent = 'Password is required.';
+        isValid = false;
+    }
+    if (isValid) {
+        document.getElementById('login-form').submit();
+    }
+</script>
+</body>

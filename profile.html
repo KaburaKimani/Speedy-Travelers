@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Commuter Profile | Speedy Travelers</title>
+    <link rel="stylesheet" href="profile.css">
+</head>
+<body>
+    <header>
+        <div class="logo-container">
+            <img src="logo-color.png" alt="Speedy Travelers Logo" class="logo">
+        </div>
+        <nav>
+            <a href="passenger.html">Home</a>
+            <a href="contactus.html">Contact Us</a>
+        </nav>
+    </header>
+    <div class="profile-container">
+        <div class="profile-card">
+            <h2>User Profile</h2>
+            <div class="user-info">
+                <img src="user-photo.jpg" alt="User Photo" class="user-photo">
+                <p id="user-name">John Doe</p>
+                <p id="user-email">john.doe@example.com</p>
+                <button onclick="toggleEditForm()">Edit Profile</button>
+            </div>
+        </div>
+
+        <!-- Edit Profile Form (Hidden by default) -->
+        <div class="edit-form" id="edit-form">
+            <label for="edit-name">Name:</label>
+            <input type="text" id="edit-name" value="John Doe">
+            <label for="edit-email">Email:</label>
+            <input type="email" id="edit-email" value="john.doe@example.com">
+            <button onclick="updateProfile()">Save Changes</button>
+        </div>
+
+        <!-- Upcoming Trips Section -->
+        <div class="profile-card">
+            <h2>Upcoming Trips</h2>
+            <ul id="upcoming-trips-list">
+                <!-- Dynamic content for upcoming trips -->
+            </ul>
+        </div>
+
+        <!-- Recent Trips Section -->
+        <div class="profile-card">
+            <h2>Recent Trips</h2>
+            <ul id="recent-trips-list">
+                <!-- Dynamic content for recent trips -->
+            </ul>
+        </div>
+
+        <!-- Wallet Section -->
+        <div class="profile-card">
+            <h2>Your Wallet</h2>
+            <p id="wallet-balance">Ksh 5000</p>
+            <button onclick="addFunds()">Add Funds</button>
+        </div>
+    </div>
+
+    <!-- Footer Section -->
+    <footer>
+        <button onclick="logout()">Log Out</button>
+    </footer>
+
+    <script src="user_profile.js"></script>
+</body>
+</html>
