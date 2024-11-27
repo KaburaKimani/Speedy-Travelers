@@ -1,64 +1,110 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sign In | Speedy Travelers</title>
+    <title>Sign Up | Speedy Travelers</title>
     <link rel="icon" type="image/x-icon" href="favicon.png">
-    <link rel="stylesheet" href="signin.css">
+    <link rel="stylesheet" href="signup.css">
 </head>
 <body>
-        <div class="login-form">
-            <img src="logo-color.png" alt="Speedy Travelers Logo" class="logo">
-            <h1>SIGN IN</h1>
-        <form action="passenger.html" method="GET">
-            <label for="email">Email:</label>
-            <input type="email" id="email" placeholder="Enter Email" required>
-            <span class="error" id="emailError"></span>
+    <div class="signup-container">
+        <img src="logo-color.png" class="logo">
+        <h1>SIGN UP</h1>
+        <form action="signup.php" method="POST" class="signup-form" onsubmit="return validateForm()">
+           <label for="name">Name:</label>
+           <input type="text" id="name" name="name" required>
+           <span class="error" id="nameError"></span>
+
+           <label for="email">Email:</label>
+           <input type="email" id="email" name="email" required>
+           <span class="error" id="emailError"></span>
+
             <label for="password">Password:</label>
-            <input type="password" id="password" placeholder="Enter Password" required>
+            <input type="password" id="password" name="password" required>
             <span class="error" id="passwordError"></span>
+
+            <label for="confirmPassword">Confirm Password:</label>
+            <input type="password" id="confirmPassword" name="confirmPassword" required>
+            <span class="error" id="confirmPasswordError"></span>
             <div class="toggle-password">
                <input type="checkbox" id="toggle">
                <label for="toggle">Show Password</label>
-            </div>
-            <button onclick="validateForm();redirectToPage();" type="submit">Login</button>
-        <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
+           </div>
+           
+           <button type="submit" onclick="redirectToPage();">Sign Up</button>
         </form>
+        <p>Already have an account? <a href="signin.html">Log in</a></p>
     </div>
-    <script type="text/javascript">
-const togglePassword = document.getElementById('toggle');
-const passwordField = document.getElementById('password');
-togglePassword.addEventListener('change', function () {
-    if (togglePassword.checked) {
-        passwordField.type = 'text';
-    } else {
-        passwordField.type = 'password';  // Hide password
-    }
-});
-</script>
-<script type="text/javascript">
-document.getElementById('login-form').addEventListener('submit', function (event) {
-    event.preventDefault();
-    const emailInput = document.getElementById('email');
-    const passwordInput = document.getElementById('password');
-    const emailError = document.getElementById('emailError');
-    const passwordError = document.getElementById('passwordError');
-
-    let isValid = true;
-    emailError.textContent = '';
-    passwordError.textContent = '';
-    const emailPattern = /^[a-zA-Z0-9._-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,6}$/;
-    if (!emailPattern.test(emailInput.value)) {
-        emailError.textContent = 'Please enter a valid email address.';
-        isValid = false;
-    }
-    if (passwordInput.value.trim() === '') {
-        passwordError.textContent = 'Password is required.';
-        isValid = false;
-    }
-    if (isValid) {
-        document.getElementById('login-form').submit();
-    }
-</script>
+    <script>
+    function validateForm() {
+            document.querySelectorAll('.error').forEach(el => el.textContent = '');
+            let isValid = true;
+            const name = document.getElementById('name').value;
+            if (!/^[A-Za-z\s]+$/.test(name)) {
+                document.getElementById('nameError').textContent = "Name should contain only alphabets and spaces.";
+                isValid = false;
+            }
+            const email = document.getElementById('email').value;
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            if (!emailRegex.test(email)) {
+                document.getElementById('emailError').textContent = "Please enter a valid email address.";
+                isValid = false;
+            }
+            const password = document.getElementById('password').value;
+            const confirmPassword = document.getElementById('confirmPassword').value;
+            const passwordRegex = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/;
+            if (!passwordRegex.test(password)) {
+                document.getElementById('passwordError').textContent = "Password must have uppercase, lowercase, number, and special character.";
+                isValid = false;
+            }
+            if (password !== confirmPassword) {
+                document.getElementById('confirmPasswordError').textContent = "Passwords do not match.";
+                isValid = false;
+            }
+            return isValid;
+        }
+    </script>
+    <script>
+        const passwordInput = document.getElementById('password');
+        const toggle = document.getElementById('toggle');
+        const toggleCheckbox = document.getElementById('toggle');
+        const passwordInput = document.getElementById('password');
+        const confirmPasswordInput = document.getElementById('confirmPassword');
+        const signupForm = document.getElementById('signupForm');
+        const passwordError = document.getElementById('passwordError');
+        const confirmPasswordError = document.getElementById('confirmPasswordError');
+        toggleCheckbox.addEventListener('change', () => {
+            const type = toggleCheckbox.checked ? 'text' : 'password';
+            passwordInput.type = type;
+            confirmPasswordInput.type = type;
+        });
+        function validatePassword(password) {
+            const passwordPattern = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$/;
+            return passwordPattern.test(password);
+        }
+        function checkPasswordMatch(password, confirmPassword) {
+            return password === confirmPassword;
+        }
+        signupForm.addEventListener('submit', function (event) {
+            let valid = true;
+            passwordError.textContent = '';
+            confirmPasswordError.textContent = '';
+            if (!validatePassword(passwordInput.value)) {
+                passwordError.textContent = 'Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.';
+                valid = false;
+            }
+            if (!checkPasswordMatch(passwordInput.value, confirmPasswordInput.value)) {
+                confirmPasswordError.textContent = 'Passwords do not match.';
+                valid = false;
+            }
+        });
+         function redirectToPage() {
+            if (validateForm()) {
+                window.location.href ="passenger.html";
+            }
+        }
+    </script>
 </body>
+</html>

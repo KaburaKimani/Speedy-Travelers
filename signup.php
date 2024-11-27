@@ -1,66 +1,84 @@
 <?php
-session_start();
+// Database connection details
+$servername = "localhost"; // Change this if your database is hosted remotely
+$username = "root"; // Replace with your database username
+$password = ""; // Replace with your database password
+$dbname = "speedy_travelers"; // Replace with your database name
 
-// Dummy user data for demonstration purposes
-$users = [
-    ['email' => 'user@example.com', 'password' => 'password123']
-];
+// Create a connection
+$conn = new mysqli($servername, $username, $password, $dbname);
 
+// Check the connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
+}
+
+// Function to sanitize input
+function sanitizeInput($data, $conn) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $conn->real_escape_string($data);
+}
+
+// Form submission logic
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $email = $_POST['email'];
-    $password = $_POST['password'];
-    $confirm_password = $_POST['confirm_password'];
+    $name = sanitizeInput($_POST['name'], $conn);
+    $email = sanitizeInput($_POST['email'], $conn);
+    $password = $_POST['password']; // Raw password
+    $confirmPassword = $_POST['confirmPassword']; // Confirm password
 
-    // Check if the passwords match
-    if ($password !== $confirm_password) {
-        $error = "Passwords do not match.";
-    } else {
-        // Check if the email is already registered
-        foreach ($users as $user) {
-            if ($user['email'] == $email) {
-                $error = "Email is already registered.";
-                break;
-            }
-        }
+    $errors = [];
 
-        // If no errors, register the user
-        if (!isset($error)) {
-            $users[] = ['email' => $email, 'password' => $password];
-            $_SESSION['user'] = ['email' => $email, 'password' => $password];
-            header("Location: home.html");
+    // Validate name
+    if (!preg_match("/^[A-Za-z\s]+$/", $name)) {
+        $errors[] = "Name should contain only alphabets and spaces.";
+    }
+
+    // Validate email
+    if (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+        $errors[] = "Invalid email format.";
+    }
+
+    // Validate password
+    $passwordPattern = "/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%?&])[A-Za-z\d@$!%?&]{8,}$/";
+    if (!preg_match($passwordPattern, $password)) {
+        $errors[] = "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character.";
+    }
+
+    // Check if passwords match
+    if ($password !== $confirmPassword) {
+        $errors[] = "Passwords do not match.";
+    }
+
+    // If no errors, insert into the database
+    if (empty($errors)) {
+        // Hash the password
+        $hashedPassword = password_hash($password, PASSWORD_BCRYPT);
+
+        // Prepare and bind
+        $stmt = $conn->prepare("INSERT INTO users (name, email, password) VALUES (?, ?, ?)");
+        $stmt->bind_param("sss", $name, $email, $hashedPassword);
+
+        if ($stmt->execute()) {
+            // Redirect to the success page
+            header("Location: passenger.html");
             exit();
+        } else {
+            echo "Error: " . $stmt->error;
         }
+
+        $stmt->close();
+    } else {
+        // Show errors
+        echo "<h3>Signup Errors:</h3>";
+        echo "<ul>";
+        foreach ($errors as $error) {
+            echo "<li>$error</li>";
+        }
+        echo "</ul>";
     }
 }
+
+$conn->close();
 ?>
-
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Signup | Speedy Travelers</title>
-    <link rel="stylesheet" href="signup.css">
-</head>
-<body class="signup-body">
-    <img src="logo-color.png" alt="Speedy Travelers Logo" class="logo">
-    <h1>SIGN UP</h1>
-    <div>
-        <form action="signup.php" method="POST" class="signup-form">
-            <label>Email</label>
-            <input type="email" name="email" placeholder="Enter Email" required>
-
-            <label>Password</label>
-            <input type="password" name="password" placeholder="Enter Password" required>
-
-            <label>Confirm Password</label>
-            <input type="password" name="confirm_password" placeholder="Confirm Password" required>
-
-            <button type="submit">Sign Up</button>
-        </form>
-        <?php if (isset($error)): ?>
-            <p style="color: red;"><?php echo $error; ?></p>
-        <?php endif; ?>
-    </div>
-</body>
-</html>

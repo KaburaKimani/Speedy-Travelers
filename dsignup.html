@@ -5,21 +5,24 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sign Up | Speedy Travelers</title>
     <link rel="icon" type="image/x-icon" href="favicon.png">
-    <link rel="stylesheet" href="signup.css">
+    <link rel="stylesheet" href="dsignup.css">
 </head>
 <body>
     <div class="signup-container">
         <img src="logo-color.png" class="logo">
         <h1>SIGN UP</h1>
-        <form action="home.html" method="GET" class="signup-form">
-            <label>Name</label>
-            <input type="text" placeholder="Enter Name" required>
+        <form action="dsignup.php" method="POST" class="signup-form">
+            <label for="name">Name:</label>
+            <input type="text" id="name" name="name" placeholder="Enter Name" required>
 
-            <label>Email</label>
-            <input type="email" placeholder="Enter Email" required>
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter Email" required>
 
-            <label>Password</label>
-            <input type="password" placeholder="Enter Password" required>
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter Password" required>
+
+            <label for="license">Driver's License Number:</label>
+            <input type="text" id="license" name="license" placeholder="Enter Driver's License Number" required>
 
             <button type="submit">Sign Up</button>
             <p>Already have an account? <a href="driver.html">Log in</a></p>

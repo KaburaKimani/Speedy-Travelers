@@ -1,44 +1,48 @@
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    $from = $_POST['from'];
-    $to = $_POST['to'];
-    $date = $_POST['date'];
-    $time = $_POST['time'];
+// Database connection
+$servername = "localhost";
+$username = "root";
+$password = "";
+$dbname = "speedy_travelers";
 
-    // Here you would typically query your database to find available routes
-    // For demonstration purposes, we'll use a static array of routes
-    $routes = [
-        ["from" => "City A", "to" => "City B", "departure" => "2024-11-22 08:00"],
-        ["from" => "City A", "to" => "City C", "departure" => "2024-11-22 09:00"],
-        ["from" => "City B", "to" => "City C", "departure" => "2024-11-22 10:00"]
-    ];
+$conn = new mysqli($servername, $username, $password, $dbname);
 
-    $availableRoutes = array_filter($routes, function($route) use ($from, $to, $date, $time) {
-        return $route['from'] == $from && $route['to'] == $to && strpos($route['departure'], $date) !== false;
-    });
+// Check connection
+if ($conn->connect_error) {
+    die("Connection failed: " . $conn->connect_error);
 }
-?>
 
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Available Routes</title>
-    <link rel="stylesheet" href="booking.css">
-</head>
-<body>
-    <div class="booking-container">
-        <h1>Available Routes</h1>
-        <?php if (!empty($availableRoutes)): ?>
-            <ul>
-                <?php foreach ($availableRoutes as $route): ?>
-                    <li><?php echo "From: " . $route['from'] . " To: " . $route['to'] . " Departure: " . $route['departure']; ?></li>
-                <?php endforeach; ?>
-            </ul>
-        <?php else: ?>
-            <p>No available routes found for your search criteria.</p>
-        <?php endif; ?>
-    </div>
-</body>
-</html>
+// Function to sanitize user input
+function sanitizeInput($data, $conn) {
+    $data = trim($data);
+    $data = stripslashes($data);
+    $data = htmlspecialchars($data);
+    return $conn->real_escape_string($data);
+}
+
+// Check if form is submitted
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $from = sanitizeInput($_POST['from'], $conn);
+    $to = sanitizeInput($_POST['to'], $conn);
+    $date = sanitizeInput($_POST['date'], $conn);
+    $time = sanitizeInput($_POST['time'], $conn);
+
+    // Validate form inputs
+    if (empty($from) || empty($to) || empty($date) || empty($time)) {
+        echo "<p style='color: red;'>All fields are required. Please fill out the form completely.</p>";
+    } else {
+        // Insert booking information into the database
+        $sql = "INSERT INTO bookings (start_location, end_location, travel_date, travel_time) 
+                VALUES ('$from', '$to', '$date', '$time')";
+
+        if ($conn->query($sql) === TRUE) {
+            echo "<p style='color: green;'>Booking successful! Your journey from $from to $to on $date at $time has been recorded.</p>";
+        } else {
+            echo "<p style='color: red;'>Error: " . $sql . "<br>" . $conn->error . "</p>";
+        }
+    }
+}
+
+// Close the connection
+$conn->close();
+?>

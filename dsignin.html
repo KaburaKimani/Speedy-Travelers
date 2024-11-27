@@ -3,44 +3,41 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title> Driver sign in | Speedy Travelers</title>
+    <title>Driver Sign In | Speedy Travelers</title>
     <link rel="icon" type="image/x-icon" href="favicon.png">
     <link rel="stylesheet" href="dsignin.css">
 </head>
 <body>
-        <div class="login-form">
-            <img src="logo-color.png" alt="Speedy Travelers Logo" class="logo">
-            <h1>SIGN IN</h1>
-        <form action="home.html" method="GET">
-            <label for="email">Email:</label>
-            <input type="email" id="email" placeholder="Enter Email" required>
+    <div class="login-form">
+        <img src="logo-color.png" alt="Speedy Travelers Logo" class="logo">
+        <h1>SIGN IN</h1>
+        <form action="passenger.html" method="POST">
+            <label fo r="email">Email:</label>
+            <input type="email" id="email" name="email" placeholder="Enter Email" required>
             <span class="error" id="emailError"></span>
-            <label for="password">Password:</label>
-            <input type="password" id="password" placeholder="Enter Password" required>
-            <span class="error" id="passwordError"></span>
-            <button onclick="redirectToPage();" type="submit">Sign In</button>
-        <p>Don't have an account? <a href="signup.html">Sign Up</a></p>
 
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" placeholder="Enter Password" required>
+            <span class="error" id="passwordError"></span>
+
+            <button type="submit">Sign In</button>
+            <p>Don't have an account? <a href="dsignup.html">Sign Up</a></p>
         </form>
     </div>
+
     <script>
-         const email = document.getElementById('email').value;
-            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailRegex.test(email)) {
-                document.getElementById('emailError').textContent = "Please enter a valid email address.";
-                isValid = false;}
-        const correctPassword = "yourSecretPassword"{
-       function checkPassword(inputPassword) {
-       if (inputPassword === correctPassword) {
-        return "Access granted";
-      } else {
-        return "Incorrect password";
-           }
-    }
-       function redirectToPage() {
-            if (validateForm()) {
-                window.location.href ="driver.html";
+        // Validate email format
+        const emailInput = document.getElementById('email');
+        const emailError = document.getElementById('emailError');
+        const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+        
+        emailInput.addEventListener('blur', function() {
+            if (!emailRegex.test(emailInput.value)) {
+                emailError.textContent = "Please enter a valid email address.";
+            } else {
+                emailError.textContent = "";
             }
-        }
+        });
     </script>
 </body>
+</html>
